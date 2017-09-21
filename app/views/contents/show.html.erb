@@ -41,17 +41,21 @@
 
 <% end %>
 
- 
-
 <br>
 
- 
     <% @ksearch.each do |k| %>
         <div class="kospis">
-            <% if current_user.is_bag?(k) %>
-                <%= link_to image_tag(k.brand_img_src), one_hund_brand_bag_path(:one_hund_brand => k), method: "post", title: k.brand_title %> 
+            <% if k.brand_img_src.nil? %>
             <% else %>
-                <%= link_to image_tag(k.brand_img_src), one_hund_brand_bag_path(:one_hund_brand => k), method: "post", title: k.brand_title %> 
+              <% if current_user.is_bag?(k) %>
+                  <%= link_to one_hund_brand_bag_path(:one_hund_brand => k), method: "post", title: k.brand_title do %>
+                      <%= image_tag(k.brand_img_src) %>
+                  <% end %>
+              <% else %>
+                  <%= link_to one_hund_brand_bag_path(:one_hund_brand => k), method: "post", title: k.brand_title do %>
+                      <%= image_tag(k.brand_img_src) %>
+                  <% end %>
+              <% end %>
             <% end %>
         </div>
     <% end %>
